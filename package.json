@@ -14,12 +14,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/micjaelajanceova/mongodb-api"
+    "url": "git+https://github.com/micjaelajanceova/jewelry-rest-api"
   },
   "bugs": {
-    "url": "https://github.com/micjaelajanceova/mongodb-api/issues"
+    "url": "https://github.com/micjaelajanceova/jewelry-rest-api/issues"
   },
-  "homepage": "https://github.com/micjaelajanceova/mongodb-api#readme",
+  "homepage": "https://github.com/micjaelajanceova/jewelry-rest-api#readme",
   "nodemonConfig": {
     "verbose": false,
     "watch": [
