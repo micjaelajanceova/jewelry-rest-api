@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import dotenvFlow from "dotenv-flow";
 import { faker } from "@faker-js/faker";
 
-// Project imports (adjust names if yours differ)
+// Project imports
 import { jewelryModel } from "../models/jewelryModel";
 import { UserModel } from "../models/userModel";
 import { connect, disconnect } from "../repository/database";
@@ -31,7 +31,7 @@ async function seedDatabase() {
 }
 
 /**
- * Deletes existing data (fresh start)
+ * Deletes existing data
  */
 async function clearCollections() {
   await jewelryModel.deleteMany({});
@@ -40,7 +40,7 @@ async function clearCollections() {
 }
 
 /**
- * Creates a couple of users with the same known password (hashed)
+ * Creates a couple of users with the same known password
  */
 async function createUsers() {
   const passwordHash = await bcrypt.hash("12345678", 10);
@@ -98,5 +98,4 @@ async function createJewelryItems(userId1: string, userId2: string, amount: numb
   console.log(`Created ${amount} jewelry items`);
 }
 
-// run it
 seedDatabase();
