@@ -56,7 +56,7 @@ try {
     });
 
     const createdUser = await newUser.save();
-    res.status(200).json({
+    res.status(201).json({
         message: "User registered successfully.",
         data: createdUser._id
     })
