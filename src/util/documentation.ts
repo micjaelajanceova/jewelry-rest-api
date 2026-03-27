@@ -21,6 +21,10 @@ export function setupSwagger(app: Application) {
                     url: 'http://localhost:4000/api',
                     description: 'Development server',
                 },
+                 {
+                    url: 'https://jewelry-rest-api.onrender.com/api',
+                    description: 'Production server'
+                }
             ],
             components: {
                 securitySchemes: {
