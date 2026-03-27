@@ -7,6 +7,6 @@ export default function health() {
         const json = await response.json();    
 
         expect(response.status()).toBe(200);
-        expect(json).toEqual({ message: 'Welcome to the TypeScript MEN REST-API' });
+        expect(json).toEqual({ message: 'Welcome to the TypeScript Jewelry REST-API' });
     });
 };

@@ -4,7 +4,7 @@ import { test } from '@playwright/test';
 
 // Test Collections
 import userTestCollection from './user.test';
-import productTestCollection from './product.test';
+import productTestCollection from './jewelry.test';
 import health from './health.test';
 
 // Project imports

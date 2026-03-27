@@ -13,13 +13,13 @@ export default function productTestCollection() {
     // Create test objects
     //------------------------------------------------------------------------------
     const userReg = {
-      name: "Lars Larsen",
-      email: "mail@larsen.com",
+      name: "Michaela Janceova",
+      email: "michaela.janceova@gmail.com",
       password: "12345678"
     }
 
     const userLogin = {
-      email: "mail@larsen.com",
+      email: "michaela.janceova@gmail.com",
       password: "12345678"
     }
 
@@ -53,8 +53,8 @@ export default function productTestCollection() {
     //------------------------------------------------------------------------------
     const expectedProduct =
     {
-      "name": "Mr. Burns statue",
-      "description": "The best and most precious",
+      "name": "Diamond Ring",
+      "description": "A beautiful diamond ring",
       "imageURL": "https://picsum.photos/500/500",
       "price": 100.96,
       "stock": 15,
@@ -64,7 +64,7 @@ export default function productTestCollection() {
       "_createdBy": userId
     }
 
-    response = await request.post("/api/products/", {
+    response = await request.post("/api/jewelry/", {
       data: expectedProduct,
       headers: {
         "auth-token": token,
@@ -78,7 +78,7 @@ export default function productTestCollection() {
     //------------------------------------------------------------------------------
     // Verify we have one product in the test repository
     //------------------------------------------------------------------------------
-    response = await request.get("/api/products/");
+    response = await request.get("/api/jewelry/");
     json = await response.json();
     const receivedProduct = json[0];
 
