@@ -45,7 +45,7 @@ export default function productTestCollection() {
     console.log("LOGIN RESPONSE:", json);
 
     const token = json.data.token;
-    const userId = json.data.userId || json.data.id || json.data._id;
+    const userId = json.data.userID || json.data.userId || json.data.id || json.data._id;
 
     console.log("USER ID:", userId);
 
