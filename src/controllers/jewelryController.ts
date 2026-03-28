@@ -15,9 +15,7 @@ import { connect, disconnect } from '../repository/database';
 
 
 export async function createJewelry(req: Request, res: Response): Promise<void> {
-
   const data = req.body;
-
 
   if (!data.name || !data.price) {
     res.status(400).json({
@@ -32,7 +30,7 @@ export async function createJewelry(req: Request, res: Response): Promise<void> 
     const product = new jewelryModel(data);
     const result = await product.save();
 
-    res.status(200).send(result);
+    res.status(201).send(result);
   }
   catch (err) {
     res.status(500).send("Failed to create jewelry item. Error: " + err);
@@ -41,8 +39,6 @@ export async function createJewelry(req: Request, res: Response): Promise<void> 
     await disconnect();
   }
 }
-
-
 
 
 /**
