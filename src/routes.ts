@@ -12,6 +12,10 @@ import {
     authenticateToken
 } from './controllers/authController';
 
+import {
+    startCron,
+    stopCron
+} from './controllers/devToolsController';
 const router: Router = Router();
 
 /**
@@ -226,7 +230,8 @@ router.put('/jewelry/:id', authenticateToken, updateJewelryById);
  */
 router.delete('/jewelry/:id', authenticateToken, deleteJewelrytById);
 
-
+router.get('/dev/start-cron/:duration', startCron);
+router.get('/dev/stop-cron', stopCron);
 
 
 export default router;
