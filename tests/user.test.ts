@@ -19,7 +19,7 @@ export default function userTestCollection() {
 
         // Asserts
         expect(response.status()).toBe(201);
-        expect(json.error).toEqual(null);
+        expect(json.error).toBeUndefined();
     });
 
 

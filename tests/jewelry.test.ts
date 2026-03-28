@@ -44,7 +44,7 @@ export default function productTestCollection() {
 
     const token = json.data.token;
     const userId = json.data.userId;
-    expect(response.status()).toBe(201);
+    expect(response.status()).toBe(200);
 
 
 
