@@ -17,9 +17,18 @@ import { connect, disconnect } from '../repository/database';
 export async function createJewelry(req: Request, res: Response): Promise<void> {
   const data = req.body;
 
-  if (!data.name || !data.price) {
+  if (
+    !data.name ||
+    !data.material ||
+    !data.imageURL ||
+    data.price === undefined ||
+    data.stock === undefined ||
+    data.isOnDiscount === undefined ||
+    data.discount === undefined ||
+    !data._createdBy
+  ) {
     res.status(400).json({
-      message: "Missing required fields: name and price are required."
+      message: "Missing required fields."
     });
     return;
   }
@@ -30,12 +39,14 @@ export async function createJewelry(req: Request, res: Response): Promise<void> 
     const product = new jewelryModel(data);
     const result = await product.save();
 
-    res.status(201).send(result);
-  }
-  catch (err) {
-    res.status(500).send("Failed to create jewelry item. Error: " + err);
-  }
-  finally {
+    res.status(201).json(result);
+  } catch (err: any) {
+    console.error("Create jewelry error:", err);
+    res.status(500).json({
+      message: "Failed to create jewelry item",
+      error: err.message
+    });
+  } finally {
     await disconnect();
   }
 }

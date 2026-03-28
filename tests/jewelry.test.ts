@@ -67,13 +67,14 @@ export default function productTestCollection() {
     response = await request.post("/api/jewelry/", {
       data: expectedProduct,
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       }
     });
 
+    const createJson = await response.json();
+    console.log("CREATE RESPONSE:", createJson);
+
     expect(response.status()).toBe(201);
-
-
 
     //------------------------------------------------------------------------------
     // Verify we have one product in the test repository

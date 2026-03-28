@@ -144,28 +144,35 @@ export async function loginUser(req: Request, res: Response) {
  * @param next
  */
 
-export function authenticateToken(req: Request, res: Response, next: NextFunction) {
+export function authenticateToken(req: Request, res: Response, next: NextFunction): void {
+    const authHeader = req.header("Authorization") || req.header("authorization");
+    const fallbackToken = req.header("auth-token");
 
-const token = req.header("Authorization")?.replace("Bearer ", "");
+    let token: string | undefined;
 
-if (!token) {
-    res.status(401).json({
-        error: "Access denied. No token provided."
-    });
-    return;
-}
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+        token = authHeader.substring(7);
+    } else if (fallbackToken) {
+        token = fallbackToken;
+    }
 
-try {
-    if (token)
-    jwt.verify(token, process.env.TOKEN_SECRET as string);
-    next();
-}
+    if (!token) {
+        res.status(401).json({ message: "Access denied. No token provided." });
+        return;
+    }
 
-catch (err) {
-    res.status(400).json({
-        error: "Invalid token."
-    });
-}
+    if (!process.env.TOKEN_SECRET) {
+        res.status(500).json({ message: "TOKEN_SECRET is not configured." });
+        return;
+    }
+
+    try {
+        const verified = jwt.verify(token, process.env.TOKEN_SECRET) as jwt.JwtPayload;
+        (req as any).user = verified;
+        next();
+    } catch (error) {
+        res.status(401).json({ message: "Invalid token." });
+    }
 
 
 };
