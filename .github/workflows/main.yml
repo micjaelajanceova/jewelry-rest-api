@@ -9,43 +9,34 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
 
-    strategy:
-      #max-parallel: 1
-      matrix:
-        node-version: [20.x, 22.x]
-        mongodb-version: ["6.0", "7.0", "8.0"]
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
+          node-version: 22.x
 
-      - name: Use Node.JS ${{ matrix.node-version }}
-        uses: actions/setup-node@v4.1.0
-        with:
-          node-version: ${{ matrix.node-version }}
-
-  
-
-      - name: NPM install, build and test
+      - name: Install dependencies and run tests
         run: |
           npm install
           npm test
         env:
+          NODE_ENV: test
           DBHOST: ${{ secrets.DBHOST }}
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
           JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+          PORT: 4000
 
-  # Heavily modified deploy job to fit render.com
   deploy:
     name: Deploy
-    needs: [test] # Our tests must pass in order to run the deploy job
+    needs: [test]
     runs-on: ubuntu-latest
 
     steps:
       - name: Deploy to production
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          service-id: ${{ secrets.SERVICE_ID }} # Can be found as part of the Deploy Hook
-          api-key: ${{ secrets.RENDER_API_KEY }} # Create your API key in Render Dashboard > Account Settings
+          service-id: ${{ secrets.SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}

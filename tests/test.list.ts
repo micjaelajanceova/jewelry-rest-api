@@ -15,29 +15,20 @@ import { connect, disconnect } from '../src/repository/database';
 import dotenvFlow from "dotenv-flow";
 dotenvFlow.config();
 
-
 function setup() {
-    test.beforeEach(async () => {
+    test.beforeAll(async () => {
+        await connect();
+    });
 
-        try {
-            await connect();
-            await UserModel.deleteMany({});
-            await jewelryModel.deleteMany({});
-        }
-        finally {
-            await disconnect();
-        }
+    test.beforeEach(async () => {
+        await UserModel.deleteMany({});
+        await jewelryModel.deleteMany({});
     });
 
     test.afterAll(async () => {
-        try {
-            await connect();
-            await UserModel.deleteMany({});
-            await jewelryModel.deleteMany({});
-        }
-        finally {
-            await disconnect();
-        }
+        await UserModel.deleteMany({});
+        await jewelryModel.deleteMany({});
+        await disconnect();
     });
 }
 
