@@ -4,33 +4,26 @@ on:
   push:
     branches: [main]
 
-
 jobs:
-
   test:
     name: Test
     runs-on: ubuntu-latest
 
-    strategy: 
-      matrix:
-        node-version: 22.x
-
     steps:
-      - name: Checkout 
+      - name: Checkout
         uses: actions/checkout@v4
-        with: 
-          fetch-depth: 0
 
-      - name: Use Node.JS ${{ matrix.node-version }}
+      - name: Use Node.js 22
         uses: actions/setup-node@v4
-        with: 
-          node-version: ${{ matrix.node-version }}
+        with:
+          node-version: 22.x
 
-      - name: NPM install, build and test
+      - name: Install dependencies and run tests
         run: |
           npm install
           npm test
-        env: 
+        env:
+          NODE_ENV: test
           DBHOST: ${{ secrets.DBHOST }}
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
           JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
@@ -38,12 +31,12 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: [test] 
+    needs: [test]
     runs-on: ubuntu-latest
 
-    steps: 
+    steps:
       - name: Deploy to production
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
           service-id: ${{ secrets.SERVICE_ID }}
-          api-key: ${{ secrets.RENDER_API_KEY }} 
+          api-key: ${{ secrets.RENDER_API_KEY }}
