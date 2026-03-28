@@ -118,7 +118,7 @@ export async function updateJewelryById(req: Request, res: Response) {
     
     await connect();
 
-    const result = await jewelryModel.findByIdAndUpdate(id, req.body);
+    const result = await jewelryModel.findByIdAndUpdate(id, req.body, { new: true });
 
     if (!result) {
       res.status(404).send("Jewelry item not found with the provided ID.");
