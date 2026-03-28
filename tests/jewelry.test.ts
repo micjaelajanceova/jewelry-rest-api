@@ -67,7 +67,7 @@ export default function productTestCollection() {
     response = await request.post("/api/jewelry/", {
       data: expectedProduct,
       headers: {
-        "auth-token": token,
+        "Authorization": `Bearer ${token}`,
       }
     });
 
