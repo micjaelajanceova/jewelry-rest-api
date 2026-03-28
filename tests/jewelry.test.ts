@@ -42,10 +42,14 @@ export default function productTestCollection() {
     response = await request.post("/api/user/login", { data: userLogin });
     json = await response.json();
 
-    const token = json.data.token;
-    const userId = json.data.userId;
-    expect(response.status()).toBe(200);
+    console.log("LOGIN RESPONSE:", json);
 
+    const token = json.data.token;
+    const userId = json.data.userId || json.data.id || json.data._id;
+
+    console.log("USER ID:", userId);
+
+    expect(response.status()).toBe(200);
 
 
     //------------------------------------------------------------------------------
