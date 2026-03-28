@@ -51,18 +51,18 @@ export default function productTestCollection() {
     //------------------------------------------------------------------------------
     // Create product
     //------------------------------------------------------------------------------
-    const expectedProduct =
-    {
-      "name": "Diamond Ring",
-      "description": "A beautiful diamond ring",
-      "imageURL": "https://picsum.photos/500/500",
-      "price": 100.96,
-      "stock": 15,
-      "discount": true,
-      "discountPct": 25,
-      "isHidden": false,
-      "_createdBy": userId
-    }
+    const expectedProduct = {
+      name: "Diamond Ring",
+      material: "gold",
+      description: "A beautiful diamond ring",
+      imageURL: "https://picsum.photos/500/500",
+      price: 100.96,
+      stock: 15,
+      isOnDiscount: true,
+      discount: 25,
+      isFeatured: false,
+      _createdBy: userId
+    };
 
     response = await request.post("/api/jewelry/", {
       data: expectedProduct,
@@ -86,6 +86,12 @@ export default function productTestCollection() {
     // verify product data
     expect(receivedProduct.name).toEqual(expectedProduct.name);
     expect(receivedProduct.description).toEqual(expectedProduct.description);
+    expect(receivedProduct.material).toEqual(expectedProduct.material);
+    expect(receivedProduct.price).toEqual(expectedProduct.price);
+    expect(receivedProduct.stock).toEqual(expectedProduct.stock);
+    expect(receivedProduct.isOnDiscount).toEqual(expectedProduct.isOnDiscount);
+    expect(receivedProduct.discount).toEqual(expectedProduct.discount);
+    expect(receivedProduct.isFeatured).toEqual(expectedProduct.isFeatured);
 
     expect(json).toHaveLength(1);
 
