@@ -33,7 +33,7 @@ export default function productTestCollection() {
 
     //expect(response.ok()).toBeTruthy();
     //expect(result).toHaveLength(0);
-    expect(response.status()).toBe(200);
+    expect(response.status()).toBe(201);
 
 
     //------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ export default function productTestCollection() {
 
     const token = json.data.token;
     const userId = json.data.userId;
-    expect(response.status()).toBe(200);
+    expect(response.status()).toBe(201);
 
 
 

@@ -18,7 +18,7 @@ export default function userTestCollection() {
         const json = await response.json();
 
         // Asserts
-        expect(response.status()).toBe(200);
+        expect(response.status()).toBe(201);
         expect(json.error).toEqual(null);
     });
 

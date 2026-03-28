@@ -6,7 +6,7 @@ export default function health() {
         const response = await request.get("/api/")
         const json = await response.json();    
 
-        expect(response.status()).toBe(200);
+        expect(response.status()).toBe(201);
         expect(json).toEqual({ message: 'Welcome to the TypeScript Jewelry REST-API' });
     });
 };
