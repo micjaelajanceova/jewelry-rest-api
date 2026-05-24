@@ -12,9 +12,9 @@ export function setupSwagger(app: Application) {
     const swaggerDefinition = {
             openapi: '3.0.0',
             info: {
-                title: 'My API',
+                title: 'Jewelry REST API',
                 version: '1.0.0',
-                description: 'API documentation for my Express app',
+                description: 'REST API for a jewelry web shop. Supports user authentication and full CRUD operations for jewelry items.',
             },
             servers: [
                 {
