@@ -1,6 +1,23 @@
 import { Request, Response } from 'express';
+import Joi, { ValidationResult } from 'joi';
 import { jewelryModel } from '../models/jewelryModel';
 import { connect, disconnect } from '../repository/database';
+
+function validateJewelryData(data: unknown): ValidationResult {
+    const schema = Joi.object({
+        name: Joi.string().min(2).max(255).required(),
+        material: Joi.string().valid('gold', 'silver', 'steel', 'other').required(),
+        description: Joi.string().min(2).max(255).optional().allow(''),
+        imageURL: Joi.string().uri().required(),
+        price: Joi.number().min(0).required(),
+        stock: Joi.number().integer().min(0).required(),
+        isOnDiscount: Joi.boolean().required(),
+        discount: Joi.number().min(0).max(100).required(),
+        isFeatured: Joi.boolean().optional(),
+        _createdBy: Joi.string().required()
+    });
+    return schema.validate(data);
+}
 
 
 
@@ -15,28 +32,17 @@ import { connect, disconnect } from '../repository/database';
 
 
 export async function createJewelry(req: Request, res: Response): Promise<void> {
-  const data = req.body;
+  const { error } = validateJewelryData(req.body);
 
-  if (
-    !data.name ||
-    !data.material ||
-    !data.imageURL ||
-    data.price === undefined ||
-    data.stock === undefined ||
-    data.isOnDiscount === undefined ||
-    data.discount === undefined ||
-    !data._createdBy
-  ) {
-    res.status(400).json({
-      message: "Missing required fields."
-    });
+  if (error) {
+    res.status(400).json({ error: error.details[0].message });
     return;
   }
 
   try {
     await connect();
 
-    const product = new jewelryModel(data);
+    const product = new jewelryModel(req.body);
     const result = await product.save();
 
     res.status(201).json(result);
@@ -58,7 +64,7 @@ export async function createJewelry(req: Request, res: Response): Promise<void> 
  * @param res 
  */
 
-export async function getAllJewelry(req: Request, res: Response) {
+export async function getAllJewelry(_req: Request, res: Response) {
 
   try {
     await connect();

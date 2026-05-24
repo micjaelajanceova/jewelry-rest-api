@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import Joi, {ValidationResult, func} from "joi";
+import Joi, {ValidationResult} from "joi";
 
 // Project imports
 import { UserModel } from "../models/userModel";
