@@ -46,11 +46,11 @@ export async function createJewelry(req: Request, res: Response): Promise<void> 
     const result = await product.save();
 
     res.status(201).json(result);
-  } catch (err: any) {
+  } catch (err) {
     console.error("Create jewelry error:", err);
     res.status(500).json({
       message: "Failed to create jewelry item",
-      error: err.message
+      error: err instanceof Error ? err.message : String(err)
     });
   } finally {
     await disconnect();

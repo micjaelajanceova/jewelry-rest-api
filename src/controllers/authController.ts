@@ -168,9 +168,9 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
 
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET) as jwt.JwtPayload;
-        (req as any).user = verified;
+        (req as Request & { user: jwt.JwtPayload }).user = verified;
         next();
-    } catch (error) {
+    } catch {
         res.status(401).json({ message: "Invalid token." });
     }
 

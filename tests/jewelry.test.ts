@@ -1,11 +1,11 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, APIRequestContext } from "@playwright/test";
 
 export default function productTestCollection() {
 
   /**
    * Helper: registers a fresh user and returns { token, userId }
    */
-  async function loginAsNewUser(request: any, suffix: string) {
+  async function loginAsNewUser(request: APIRequestContext, suffix: string) {
     const email = `test.user.${suffix}@example.com`;
     await request.post("/api/user/register", {
       data: { name: "Test User", email, password: "password123" }

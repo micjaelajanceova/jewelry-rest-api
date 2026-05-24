@@ -15,30 +15,29 @@ const jewelrySchema = new Schema<JewelryItem>({
 });
 
 
-type UpdateQuery<T> = {
-    [key: string]: any;
-} & {
+type UpdateDoc = Record<string, unknown> & {
     __v?: number;
-    $set?: Partial<T> & { __v?: number };
-    $setOnInsert?: Partial<T> & { __v?: number };
+    $set?: Partial<JewelryItem> & { __v?: number };
+    $setOnInsert?: Partial<JewelryItem> & { __v?: number };
     $inc?: { __v?: number };
 };
 
-jewelrySchema.pre('findOneAndUpdate', function <T extends Document>(this: any) {
-    const update = this.getUpdate() as UpdateQuery<T>;
+jewelrySchema.pre('findOneAndUpdate', function(this: { getUpdate(): unknown }) {
+    const update = this.getUpdate() as UpdateDoc;
     if (update.__v != null) {
         delete update.__v;
     }
-    const keys: Array<'$set' | '$setOnInsert'> = ['$set', '$setOnInsert'];
+    const keys: ('$set' | '$setOnInsert')[] = ['$set', '$setOnInsert'];
     for (const key of keys) {
-        if (update[key] != null && update[key]!.__v != null) {
-            delete update[key]!.__v;
-            if (Object.keys(update[key]!).length === 0) {
+        const section = update[key] as ({ __v?: number } & Record<string, unknown>) | undefined;
+        if (section != null && section.__v != null) {
+            delete section.__v;
+            if (Object.keys(section).length === 0) {
                 delete update[key];
             }
         }
     }
-    update.$inc = update.$inc || {};
+    update.$inc = update.$inc ?? {};
     update.$inc.__v = 1;
 });
 
