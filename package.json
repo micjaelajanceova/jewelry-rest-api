@@ -11,7 +11,7 @@
     "start": "node dist/index.js",
     "start-dev": "cross-env NODE_ENV=development npx nodemon",
     "seed": "npx ts-node ./src/util/dataSeeder.ts",
-    "lint": "npx eslint",
+    "lint": "eslint src tests",
     "testdb": "cross-env NODE_ENV=test npx ts-node ./src/index.ts",
     "test": "npx playwright test --reporter=html"
   },
